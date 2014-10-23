@@ -1,0 +1,35 @@
+<html>
+    <head>
+        <title>Sketch Animator</title>
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+    </head>
+    <body>
+        <div id="stage"></div>
+        
+        <div class="stepButton" id="endDraw">
+            Draw your shape. Click here when you are done.
+        </div>
+        <div class="stepButton" id="endInterior">
+            Add some interior nodes. Click here when are you are done.
+        </div>
+        <div class="stepButton" id="endHandles">
+            Choose some handles you would like to use to pose your shape. Click here when are you are done.
+        </div>
+        <div id="animationControls">
+            <div class="animationControl" id="animRecord">Record</div>
+            <div class="animationControl" id="animPlay">Play</div>
+            <div class="animationControl" id="animKeyframe">Add Keyframe</div>
+        </div>
+
+        <script src="lib/raphael-min.js" type="text/javascript"></script>
+        <script src="lib/jquery-min.js" type="text/javascript"></script>
+        <script src="lib/poly2tri.js" type="text/javascript"></script>
+        <script src="lib/math.min.js" type="text/javascript"></script>
+        
+        <script src="src/asrigidaspossible.js" type="text/javascript"></script>
+        <script src="src/sanimmodel.js" type="text/javascript"></script>
+        <script src="src/sanimview.js" type="text/javascript"></script>
+        <script src="src/sanimcontroller.js" type="text/javascript"></script>
+        <script src="src/main.js" type="text/javascript"></script>
+    </body>
+</html>
