@@ -1,45 +1,433 @@
+*,
+*:before,
+*:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing:    border-box;
+  box-sizing:         border-box;
+}
+
 body {
-    padding: 0px;
-    margin: 0px;
+  padding: 0px;
+  margin: 0px;
 }
 
 #stage {
-    width:100%;
-    height:100%;
+  width:100%;
+  height:100%;
 }
 
 svg {
-    box-shadow: 0px 0px 20px 1px #888888;
+  box-shadow: 0px 0px 20px 1px #888888;
 }
 
-.stepButton, #animationControls {
-    position: absolute;
-    bottom: 0px;
-    width: 100%;
-    height: 3em;
-    background: lightgrey;
-    font-size: 2em;
-    text-align: center;
-    line-height: 3em;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap; 
+.stepButton {
+  position: absolute;
+  bottom: 100px;
+  left: 150px;
+  height: 3em;
+  background: lightgrey;
+  font-size: 2em;
+  text-align: center;
+  line-height: 3em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap; 
 }
 
 .stepButton:hover {
-    background: darkblue;
-    color: white;
-    cursor: pointer;
+  background: darkblue;
+  color: white;
+  cursor: pointer;
 }
 
-.animationControl {
-    display: inline-block;
-    width: 7em;
+
+.stepButton { 
+  width: 200px;
+  margin: 0 auto;
 }
 
-.animationControl:hover {
-    background: darkblue;
-    color: white;
-    cursor: pointer;
+/*****
+  buttons
+  ******/
+.img-button {
+  border: 0;
+  position: absolute;
+  background: url("../images/buttons2.png");
+  cursor: pointer;
+  opacity: 0.5;
+}
+  .img-button.enabled {
+    opacity: 1;
+  }
+
+.next-button {
+  right: 10px;
+  bottom: 10px;
+  width: 90px;
+  height: 68px;
+  background-position: -42px 0;
+}
+  .next-button.enabled:hover,
+  .next-button.enabled:active {
+    background-position: -42px -69px;
+  }
+.clear-button {
+  left: 10px;
+  bottom: 10px;
+  width: 43px;
+  height: 67px;
+  background-position: 0 0;
+}
+  .clear-button.enabled:hover,
+  .clear-button.enabled:active {
+    background-position: 0 -67px;
+  }
+.help-button {
+  right: 10px;
+  top: 10px;
+  width: 44px;
+  height: 70px;
+  background-position: -133px 0;
+}
+  .help-button.enabled:hover,
+  .help-button.enabled:active {
+    background-position: -133px -70px;
+  }
+
+.logo {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  pointer-events: none;
 }
 
+
+.tutorial {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-size: 400px 294px;
+  background-repeat: no-repeat;
+  display: none;
+}
+  .tutorial.enabled {
+    display: block;
+  }
+  .tutorial.step-poly {
+    background-image: url('../images/step1.png');
+  }
+  .tutorial.step-poly .next-button-tut {
+    position: absolute;
+    bottom: 58px;
+    right: 78px;
+    width: 110px;
+    height: 77px;
+    background-image: url('../images/nextbutton.png');
+  }
+  .tutorial.step-poly .close-tut {
+    position: absolute;
+    top: 58px;
+    right: 20px;
+    width: 120px;
+    height: 55px;
+    background-image: url('../images/hidetut.png');
+  }
+  .tutorial.step-steiner {
+    background-image: url('../images/step2.png');
+  }
+  .tutorial.step-handles {
+    background-image: url('../images/step3.png');
+  }
+  .tutorial.step-animate {
+    background-image: url('../images/step4.png');
+  }
+  .tutorial.step-animate .next-button-tut {
+    display: none;
+  }
+
+
+.bottom-parent {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  width: 240px;
+  pointer-events: none;
+}
+.animation-controls {
+  margin: 0 auto;
+  position: relative;
+  width: 240px;
+  height: 93px;
+  background-image: url('../images/animbuttons.png');
+  pointer-events: auto;
+}
+
+.anim-button {
+  border: 0;
+  position: absolute;
+  background: #fff;
+  cursor: pointer;
+  opacity: 0.5;
+}
+  .anim-button.enabled {
+    opacity: 1;
+    background-color: transparent;
+  }
+  .anim-button.enabled:hover {
+    background-image: url('../images/animbuttons.png');
+  }
+
+.record-button {
+  top: 15px;
+  left: 20px;
+  width: 52px;
+  height: 60px;
+}
+  .record-button:hover {
+    background-position: -20px -95px;
+  }
+.play-button {
+  top: 15px;
+  left: 84px;
+  width: 55px;
+  height: 60px;
+}
+  .play-button:hover {
+    background-position: -84px -95px;
+  }
+  .play-button.playing {
+    background-image: url('../images/animbuttons.png');
+    background-position: -18px -154px;
+  }
+  .play-button.playing:hover {
+    background-position: -88px -154px;
+  }
+.keyframe-button {
+  top: 15px;
+  left: 150px;
+  width: 67px;
+  height: 60px;
+}
+  .keyframe-button:hover {
+    background-position: -150px -95px;
+  }
+
+
+
+
+
+@media only screen and (min-width: 480px) {
+  .bottom-parent {
+    bottom: 10px;
+    left: 0;
+    width: 100%;
+  }
+}
+
+
+
+
+
+
+/****
+  CSS Tooltips by Chris Bracco
+  http://cbracco.me/a-simple-css-tooltip/
+  ****/
+
+/**
+ * Tooltips!
+ */
+
+/* Base styles for the element that has a tooltip */
+[data-tooltip],
+.tooltip {
+  /* position: relative; */
+  cursor: pointer;
+}
+
+/* Base styles for the entire tooltip */
+[data-tooltip]:before,
+[data-tooltip]:after,
+.tooltip:before,
+.tooltip:after {
+  position: absolute;
+  visibility: hidden;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+  opacity: 0;
+  -webkit-transition: 
+    opacity 0.2s ease-in-out,
+    visibility 0.2s ease-in-out,
+    -webkit-transform 0.2s cubic-bezier(0.71, 1.7, 0.77, 1.24);
+  -moz-transition:    
+    opacity 0.2s ease-in-out,
+    visibility 0.2s ease-in-out,
+    -moz-transform 0.2s cubic-bezier(0.71, 1.7, 0.77, 1.24);
+  transition:         
+    opacity 0.2s ease-in-out,
+    visibility 0.2s ease-in-out,
+    transform 0.2s cubic-bezier(0.71, 1.7, 0.77, 1.24);
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform:    translate3d(0, 0, 0);
+  transform:         translate3d(0, 0, 0);
+  pointer-events: none;
+}
+
+/* Show the entire tooltip on hover and focus */
+[data-tooltip]:hover:before,
+[data-tooltip]:hover:after,
+.tooltip:hover:before,
+.tooltip:hover:after {
+  visibility: visible;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+  opacity: 1;
+}
+
+/* Base styles for the tooltip's directional arrow */
+.tooltip:before,
+[data-tooltip]:before {
+  z-index: 1001;
+  border: 6px solid transparent;
+  background: transparent;
+  content: "";
+  height: 0;
+}
+
+/* Base styles for the tooltip's content area */
+.tooltip:after,
+[data-tooltip]:after {
+  z-index: 1000;
+  padding: 8px;
+  width: 160px;
+  background-color: #000;
+  background-color: hsla(0, 0%, 20%, 0.9);
+  color: #fff;
+  content: attr(data-tooltip);
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+/* Directions */
+
+/* Top (default) */
+[data-tooltip]:before,
+[data-tooltip]:after,
+.tooltip:before,
+.tooltip:after,
+.tooltip-top:before,
+.tooltip-top:after {
+  bottom: 100%;
+  left: 50%;
+}
+
+[data-tooltip]:before,
+.tooltip:before,
+.tooltip-top:before {
+  margin-left: -6px;
+  margin-bottom: -12px;
+  border-top-color: #000;
+  border-top-color: hsla(0, 0%, 20%, 0.9);
+}
+
+/* Horizontally align top/bottom tooltips */
+[data-tooltip]:after,
+.tooltip:after,
+.tooltip-top:after {
+  margin-left: -80px;
+}
+
+[data-tooltip]:hover:before,
+[data-tooltip]:hover:after,
+.tooltip:hover:before,
+.tooltip:hover:after,
+.tooltip-top:hover:before,
+.tooltip-top:hover:after {
+  -webkit-transform: translateY(-12px);
+  -moz-transform:    translateY(-12px);
+  transform:         translateY(-12px); 
+}
+
+/* Left */
+.tooltip-left:before,
+.tooltip-left:after {
+  right: 100%;
+  bottom: 50%;
+  left: auto;
+}
+
+.tooltip-left:before {
+  margin-left: 0;
+  margin-right: -12px;
+  margin-bottom: 0;
+  border-top-color: transparent;
+  border-left-color: #000;
+  border-left-color: hsla(0, 0%, 20%, 0.9);
+}
+
+.tooltip-left:hover:before,
+.tooltip-left:hover:after {
+  -webkit-transform: translateX(-12px);
+  -moz-transform:    translateX(-12px);
+  transform:         translateX(-12px); 
+}
+
+/* Bottom */
+.tooltip-bottom:before,
+.tooltip-bottom:after {
+  top: 100%;
+  bottom: auto;
+  left: 50%;
+}
+
+.tooltip-bottom:before {
+  margin-top: -12px;
+  margin-bottom: 0;
+  border-top-color: transparent;
+  border-bottom-color: #000;
+  border-bottom-color: hsla(0, 0%, 20%, 0.9);
+}
+
+.tooltip-bottom:hover:before,
+.tooltip-bottom:hover:after {
+  -webkit-transform: translateY(12px);
+  -moz-transform:    translateY(12px);
+  transform:         translateY(12px); 
+}
+
+/* Right */
+.tooltip-right:before,
+.tooltip-right:after {
+  bottom: 50%;
+  left: 100%;
+}
+
+.tooltip-right:before {
+  margin-bottom: 0;
+  margin-left: -12px;
+  border-top-color: transparent;
+  border-right-color: #000;
+  border-right-color: hsla(0, 0%, 20%, 0.9);
+}
+
+.tooltip-right:hover:before,
+.tooltip-right:hover:after {
+  -webkit-transform: translateX(12px);
+  -moz-transform:    translateX(12px);
+  transform:         translateX(12px); 
+}
+
+/* Move directional arrows down a bit for left/right tooltips */
+.tooltip-left:before,
+.tooltip-right:before {
+  
+}
+
+/* Vertically center tooltip content for left/right tooltips */
+.tooltip-left:after,
+.tooltip-right:after {
+  margin-left: 0;
+  margin-bottom: -10px;
+}

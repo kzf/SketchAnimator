@@ -1,4 +1,8 @@
 var SAnimModel = function() {
+    this.clearModel();
+}
+
+SAnimModel.prototype.clearModel = function() {
     this._contour = [];
     this._steiner = [];
     this._nodes = [];
@@ -85,6 +89,10 @@ SAnimModel.prototype.listHandles = function() {
     return handles;
 }
 
+SAnimModel.prototype.doneAddingHandles = function() {
+    return this._nhandles >= 2;
+}
+
 SAnimModel.prototype.precomputeAnimation = function() {
     var _abctris = [];
     for (var i = 0; i < this._tris.length; i++) {
@@ -97,7 +105,15 @@ SAnimModel.prototype.precomputeAnimation = function() {
 }
 
 SAnimModel.prototype.moveHandle = function(id, x, y) {
-    var changes = []
+    var changes = [];
     changes[this._nodeidmap[id]] = {x: x, y: y};
+    this.ARAP.computeNewVerts(changes);
+}
+
+SAnimModel.prototype.moveAllHandles = function(_changes) {
+    var changes = [];
+    for (var i in _changes) {
+        changes[this._nodeidmap[i]] = _changes[i];
+    }
     this.ARAP.computeNewVerts(changes);
 }

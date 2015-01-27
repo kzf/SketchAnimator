@@ -13,16 +13,28 @@ var SAnimController = function(model, view) {
     this.state = this.states.DRAWING_SHAPE;
     
     this.view.updateState(this.state, this.states);
+
+    this.view.nextStep.click(function(e) {
+        _this.nextStage();
+    });
+    this.view.clearButton.click(function(e) {
+        _this.model.clearModel();
+        _this.view.clearView();
+        _this.state = _this.states.DRAWING_SHAPE;
+    });
+    this.view.tutorialButton.click(function(e) {
+        _this.view.toggleTutorial();
+    });
+    this.view.animRecord.click(function(e) {
+        _this.view.startRecording();
+    });
+    this.view.animKeyframe.click(function(e) {
+        _this.view.addSpatialKeyframe(e);
+    });
+    this.view.animPlay.click(function(e) {
+        _this.view.togglePlaying();
+    });
     
-    this.view.endDraw.click(function(e) {
-        _this.endDraw();
-    });
-    this.view.endInterior.click(function(e) {
-        _this.endInterior();
-    });
-    this.view.endHandles.click(function(e) {
-        _this.endHandles();
-    });
     this.view.clickevents.on("click", function(e) {
         _this.drawPoint(e);
     });
@@ -32,35 +44,33 @@ var SAnimController = function(model, view) {
     this.view.clickevents.on("handlemove", function(e, id, x, y) {
         _this.moveHandle(id, x, y);
     });
+    this.view.clickevents.on("allhandlesmove", function(e, _changes) {
+        _this.moveAllHandles(_changes);
+    });
 }
 
-SAnimController.prototype.endDraw = function() {
+SAnimController.prototype.nextStage = function() {
     if (this.state == this.states.DRAWING_SHAPE &&
-        this.model.doneDrawingShape()) {
+            this.model.doneDrawingShape()) {
         this.model.closeShape();
         this.view.closeShape();
         this.state = this.states.ADDING_INTERNAL;
         this.view.updateState(this.state, this.states);
-    }
-}
-
-SAnimController.prototype.endInterior = function() {
-    if (this.state == this.states.ADDING_INTERNAL) {
+    } else if (this.state == this.states.ADDING_INTERNAL) {
+        this.view.disableNextStepButton();
         var tris = this.model.computeTriangulation();
         this.view.addTriangulation(tris);
         this.state = this.states.PICKING_HANDLES;
         this.view.updateState(this.state, this.states);
         this.model.setupHandlePicking();
-    }
-}
-
-SAnimController.prototype.endHandles = function() {
-    if (this.state == this.states.PICKING_HANDLES) {
+    } else if (this.state == this.states.PICKING_HANDLES &&
+            this.model.doneAddingHandles()) {
         var handles = this.model.listHandles();
         this.view.rebuildForAnimation(handles);
         this.model.precomputeAnimation();
         this.state = this.states.ANIMATING;
         this.view.updateState(this.state, this.states);
+        this.view.hideNextStepButton();
     }
 }
 
@@ -76,6 +86,9 @@ SAnimController.prototype.drawPoint = function(e) {
 SAnimController.prototype.addPolygonNode = function(x, y) {
     var node = this.model.addPolygonNode(x, y);
     this.view.addPolygonNode(node);
+    if (this.model.doneDrawingShape()) {
+        this.view.enableNextStepButton();
+    }
 }
 
 SAnimController.prototype.addInternalNode = function(x, y) {
@@ -87,6 +100,9 @@ SAnimController.prototype.addHandle = function(id) {
     if (!this.model.isHandle(id)) {
         this.model.addHandle(id);
         this.view.addHandle(id);
+        if (this.model.doneAddingHandles()) {
+            this.view.enableNextStepButton();
+        }
     }
 }
 
@@ -95,4 +111,8 @@ SAnimController.prototype.moveHandle = function(id, x, y) {
     this.view.redrawShape();
 }
 
+SAnimController.prototype.moveAllHandles = function(_changes) {
+    this.model.moveAllHandles(_changes);
+    this.view.redrawShape();
+}
 

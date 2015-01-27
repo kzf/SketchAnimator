@@ -4,9 +4,13 @@
         <link rel="stylesheet" type="text/css" href="css/style.css">
     </head>
     <body>
+        <div id="tutorial" class="tutorial enabled step-poly">
+            <div class="next-button-tut"></div>
+            <div class="close-tut"></div>
+        </div>
         <div id="stage"></div>
         
-        <div class="stepButton" id="endDraw">
+        <!--<div class="stepButton" id="endDraw">
             Draw your shape. Click here when you are done.
         </div>
         <div class="stepButton" id="endInterior">
@@ -14,12 +18,22 @@
         </div>
         <div class="stepButton" id="endHandles">
             Choose some handles you would like to use to pose your shape. Click here when are you are done.
+        </div>-->
+        <div class="bottom-parent">
+        <div id="animationControls" class="animation-controls">
+            <button class="anim-button record-button tooltip-top" id="animRecord" data-tooltip="Record animation"></button>
+            <button class="anim-button play-button tooltip-top" id="animPlay" data-tooltip="Pause/play animation"></button>
+            <button class="anim-button enabled keyframe-button tooltip-top" id="animKeyframe" data-tooltip="Make a keyframe"></button>
         </div>
-        <div id="animationControls">
-            <div class="animationControl" id="animRecord">Record</div>
-            <div class="animationControl" id="animPlay">Play</div>
-            <div class="animationControl" id="animKeyframe">Add Keyframe</div>
         </div>
+
+        <div class="logo">
+            <img src="images/logo.png">
+        </div>
+
+        <button class="img-button next-button tooltip-left" id="nextStep" data-tooltip="Next step"></button>
+        <button class="img-button clear-button tooltip-right" id="clear" data-tooltip="Clear current sketch"></button>
+        <button class="enabled img-button help-button tooltip-left" id="tutorialButton" data-tooltip="Show/hide tutorial"></button>
 
         <script src="lib/raphael-min.js" type="text/javascript"></script>
         <script src="lib/jquery-min.js" type="text/javascript"></script>
